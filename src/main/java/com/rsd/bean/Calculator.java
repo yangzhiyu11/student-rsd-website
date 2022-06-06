@@ -1,9 +1,13 @@
 package com.rsd.bean;
 
 public class Calculator {
+
     private String nub1;
+
     private String nub2;
+
     private String myselect;
+
     private String nub3;
 
     public String getNub1() {
