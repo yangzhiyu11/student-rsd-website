@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script>
+            function sun() {
+                var nub1 = document.getElementById("nub1");
+                var i = parseInt(nub1.value);
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var nub2 = xhr.responseText;//接前面页面的那个3
+                        var j = parseInt(nub2);
+                        i += j;
+
+                        var info = document.getElementById("info");
+                        info.innerHTML = i;
+                    }
+                };
+                xhr.open("get","/text/ajax",true);
+                xhr.send();
+
+
+            }
+        </script>
+    </head>
+    <body>
+        <input type="number" id="nub1" />
+        <input type="button" value="合并计算" onclick="sun();"/>
+        <span id="info"></span>
+    </body>
+</html>

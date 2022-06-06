@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>第一个js页面</title>
+        <script>
+            // var i = 3;
+            // alert(typeof i);
+            // alert("11111111"+i);
+            // // alert("哈哈哈哈哈");
+            // var i = "aaa"
+            // alert(typeof i);
+            // confirm("您确定删除么？")
+            // var i = confirm("您确定删除么？")
+            // if (confirm("您确定删除么？")){
+            //     alert("删除成功")
+            // }
+            // alert("删除成功。")
+            function showInfo() {
+                // alert("aaaaa" + str)
+                // showInfo("AAAAA");
+                var aa = document.getElementById("s1");
+                alert(aa.innerText);
+                var dd = document.getElementById("login_name")
+                alert(dd.value);
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <td id="s1">皮鞋</td>
+                    <td id="s2">布鞋</td>
+                </tr>
+            </table>
+        </div>
+        <input type="button" value="点击" onclick="showInfo()"/>
+        <input type="text" name="login_name" id="login_name"/>
+    </body>
+</html>

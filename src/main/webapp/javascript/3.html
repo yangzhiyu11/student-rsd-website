@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script>
+            function loadData() {
+            //     var xhr = new XMLHttpRequest();
+            //     xhr.onreadystatechange = function () {
+            //         if (xhr.readyState == 4 && xhr.status == 200) {
+            //             var data = xhr.responseText;//传回的是字符串
+            //             var json = JSON.parse(data);//转成JSON
+            //             alert(json.realName);
+            //         }
+            //     };
+            //     xhr.open("get","/hello",true);
+            //     xhr.send();
+
+                var data = '{"id":10,"loginName":"咩咩咩咩","sex":"男"}';
+                var json = JSON.parse(data);
+                var info = document.getElementById("info");
+                info.innerText = json.id + "  " + json.loginName + "  " +json.sex;
+            }
+        </script>
+    </head>
+    <body>
+        <input type="button" value="显示数据" onclick="loadData();"/>
+        <div id="info"></div>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rsd.mapper.INewsInfoMapper">
+    <resultMap id="newsInfoMap" type="com.rsd.bean.NewsInfo">
+        <result property="typeId" column="type_id"/>
+        <result property="shortDesc" column="short_desc"/>
+        <result property="showTime" column="show_time"/>
+        <result property="pubUserId" column="pub_user_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="queryList" resultMap="newsInfoMap">
+        select * from bu_news_info;
+    </select>
+
+    <select id="getById" parameterType="Integer" resultMap="newsInfoMap">
+        select * from bu_news_info where id=#{id};
+    </select>
+
+    <insert id="insert" parameterType="com.rsd.bean.NewsInfo">
+        insert into bu_news_info values (null,#{title},#{typeId},#{shortDesc},#{content},#{showTime},#{pubUserId},#{createTime},#{updateTime});
+    </insert>
+
+    <update id="update" parameterType="com.rsd.bean.NewsInfo">
+        update bu_news_info
+        <set>
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="typeId != null">
+                type_id=#{typeId},
+            </if>
+            <if test="shortDesc != null">
+                short_desc=#{shortDesc},
+            </if>
+            <if test="content != null">
+                content=#{content},
+            </if>
+            <if test="showTime != null">
+                show_time=#{showTime},
+            </if>
+            <if test="pubUserId != null">
+                pub_user_id=#{pubUserId},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        where id=#{id};
+    </update>
+
+    <delete id="deleteById" parameterType="Integer">
+        delete from bu_news_info where id=#{id};
+    </delete>
+</mapper>

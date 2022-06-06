@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>系统功能</title>
+
+        <script type="text/javascript">
+            function toUpdatePage(id) {
+                location.href = "/sysFunction/update.html?id="+id;
+            }
+
+            function doDelete(id) {
+                if (confirm("您确定删除么？")){
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function (){
+                        if (xhr.readyState == 4 && xhr.status == 200){
+                            var data = xhr.responseText;
+                            if (data == "true") {
+                                alert("删除成功！");
+                                location.href = "/sysFunction/list.html";
+                            } else {
+                                alert("删除失败！")
+                            }
+                        }
+                    }
+                    xhr.open("get","/sysFunction/doDelete?id="+id,true);
+                    // xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+                    xhr.send();
+                }
+            }
+        </script>
+
+        <script>
+            function loadTable() {
+                var iArray;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        iArray = JSON.parse(data);
+
+                        var str = "<table border='1' width='100%'>";
+                        str += "<tr>";
+                        str += "<th>主键</th>";
+                        str += "<th>名称</th>";
+                        str += "<th>操作</th>";
+                        str += "<tr/>";
+
+                        iArray.forEach(function (obj,index){
+                            str += "<tr>";
+                            str += "<td>"+(index+1)+"</td>";
+                            str += "<td>"+obj.name+"</td>";
+                            str += "<td><a href='javascript:toUpdatePage("+obj.id+");'>修改</a> <a href='javascript:doDelete("+obj.id+")'>删除</a></td>";
+                            str += "<tr/>";
+                        });
+
+                        str += "</table>";
+
+                        var showTable = document.getElementById("showTable");
+                        showTable.innerHTML = str;
+                    }
+                };
+                xhr.open("get","/sysFunction/list",true);
+                xhr.send();
+
+
+            }
+        </script>
+    </head>
+    <body onload="loadTable()">
+        <h2>系统功能表</h2>
+        <a href="/sysFunction/add.html">新增</a>
+        <div id="showTable"></div>
+    </body>
+</html>

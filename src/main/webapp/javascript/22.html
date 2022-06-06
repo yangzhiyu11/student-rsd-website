@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script type="text/javascript">
+            function oper() {
+                var nub1 = document.getElementById("nub1");
+                var oper = document.getElementById("oper")
+                var nub2 = document.getElementById("nub2");
+
+                // var value;
+                // if (oper.value == "+") {
+                    value = parseFloat(nub1.value)+ parseFloat(nub2.value);
+                // }
+                // if (oper.value == "-") {
+                //     value = nub1.value - nub2.value;
+                // }
+                // if (oper.value == "*") {
+                //     value = nub1.value * nub2.value;
+                // }
+                // if (oper.value == "/") {
+                //     value = nub1.value / nub2.value;
+                // }
+                var nub3 = document.getElementById("nub3");
+                nub3.value = eval(nub1.value + oper.value + nub2.value);
+            }
+            function nubButton(obj) {
+                var lastResult = document.getElementById("lastResult");
+                lastResult.value += obj.value;
+            }
+            function result() {
+                var lastResult = document.getElementById("lastResult");
+                lastResult.value = eval(lastResult.value);
+            }
+            function empty() {
+                var lastResult = document.getElementById("lastResult");
+                lastResult.value = "";
+            }
+            function currentTime() {
+                var sj = new Date();
+                var showTime = document.getElementById("showTime");
+                showTime.innerText = sj.getFullYear() + "-" + (sj.getMonth()+1) + "-" + sj.getDate() + " " + sj.getHours() + ":" + sj.getMinutes();
+            }
+        </script>
+    </head>
+    <body>
+        <input type="text" id="nub1"/>
+        <select id="oper">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" id="nub2"/>
+        <input type="button" value=" = " onclick="oper();"/>
+        <input type="text" id="nub3"/>
+        <br/>
+        <h2>计算器</h2>
+        <table border="1" width="200">
+            <tr>
+                <td colspan="4" style="text-align: center;height: 50px;">
+                    <input type="text" id="lastResult" style="width: 94%;height: 80%;text-align: right;" />
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 40px;"><input type="button" value="7" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="8" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="9" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="/" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+
+            </tr>
+            <tr>
+                <td style="height: 40px;"><input type="button" value="4" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="5" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="6" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="*" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+            </tr>
+            <tr>
+                <td style="height: 40px;"><input type="button" value="1" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="2" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="3" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="-" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+            </tr>
+            <tr>
+                <td style="height: 40px;"><input type="button" value="0" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="+" style="width: 50px;height: 100%" onclick="nubButton(this);" /></td>
+                <td style="height: 40px;"><input type="button" value="AC" style="width: 50px;height: 100%;background-color: red" onclick="empty();" /></td>
+                <td style="height: 40px;"><input type="button" value="=" style="width: 50px;height: 100%;background-color: orange;" onclick="result();" /></td>
+            </tr>
+        </table>
+        <br/>
+        <input type="button" value="显示当前时间" onclick="currentTime();" />
+        <span id="showTime"></span>
+    </body>
+</html>

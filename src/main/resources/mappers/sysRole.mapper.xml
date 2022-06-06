@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rsd.mapper.ISysRoleMapper">
+    <select id="queryList" resultType="com.rsd.bean.SysRole">
+        select * from bu_sys_role;
+    </select>
+    
+    <select id="getById" parameterType="Integer" resultType="com.rsd.bean.SysRole">
+        select * from bu_sys_role where id=#{id};
+    </select>
+
+<!--    <select id="insert" parameterType="com.rsd.bean.SysRole">-->
+<!--        insert into bu_sys_role values (null ,#{name}#{create })-->
+<!--    </select>-->
+</mapper>

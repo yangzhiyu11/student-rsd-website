@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>添加新闻信息</title>
+        <script type="text/javascript">
+            function checkForm() {
+                var myForm = document.getElementById("myForm");
+                var  formData  = new FormData(myForm);
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200){
+                        if (xhr.responseText == "true"){
+                            alert("保存成功")
+                            window.location.href = "/newsInfo/list2.html";
+                        }else {
+                            alert("保存失败!")
+                        }
+                    }
+                }
+                xhr.open("post","/newsInfo/doAdd",true);
+                xhr.send(formData);
+            }
+        </script>
+    </head>
+    <body>
+        <form id="myForm">
+            <table border="1" width="500px">
+                <tr>
+                    <td width="100">标题</td>
+                    <td><input type="text" name="title" id="title"></td>
+                </tr>
+                <tr>
+                    <td>新闻类型</td>
+                    <td>
+                        <select name="typeId" id="typeId">
+                            <option value="">请选择</option>
+                            <option value="1">实时新闻</option>
+                            <option value="2">体育新闻</option>
+                            <option value="3">科技新闻</option>
+                            <option value="4">农业新闻</option>
+                            <option value="5">最新动态</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>简短描述</td>
+                    <td><input type="text" name="shortDesc" id="shortDesc"></td>
+                </tr>
+                <tr>
+                    <td>新闻内容</td>
+                    <td><input type="text" name="content" id="content"></td>
+                </tr>
+                <tr>
+                    <td>发布时间</td>
+                    <td><input type="text" name="showTime" id="showTime"></td>
+                </tr>
+                <tr>
+                    <td>发布人员</td>
+                    <td><input type="text" name="pubUserId" id="pubUserId"></td>
+                </tr>
+            </table>
+            <input type="button" value="确认" onclick="checkForm()">
+        </form>
+        <br/>
+        <div><a href="/newsInfo/list2.html">返回</a></div>
+    </body>
+</html>

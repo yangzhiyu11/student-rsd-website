@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script>
+            function srwb() {
+                var sr = document.getElementById("sr");
+                var zz = document.getElementById("zz");
+                var pp = document.getElementById("pp");
+                var reg = new RegExp(zz.value);
+                var bj = reg.test(sr.value)
+                if (bj) {
+                    pp.value = sr.value;
+                } else {
+                    pp.value = "没有匹配";
+                    return;
+                }
+            }
+
+            function thwb() {
+                var th = document.getElementById("th");
+                var jg = document.getElementById("jg");
+                var sr = document.getElementById("sr");
+                var zz = document.getElementById("zz");
+
+                var reg2 = new RegExp(zz.value,"g");
+                var result = sr.value.replaceAll(reg2,th.value);
+
+                jg.value = result;
+
+            }
+        </script>
+    </head>
+    <body>
+        <h2>在线正则表达式测试</h2>
+        <textarea cols="100" rows="8" id="sr"></textarea>
+        <br/>
+        正则表达式:<input type="text" id="zz">
+        <input type="button" value="测试匹配" onclick="srwb();">
+        <br/>
+        <br/>
+        匹配结果:
+        <br>
+        <textarea cols="100" rows="8" id="pp"></textarea>
+        <br/>
+        替换文本:<input type="text" id="th">
+        <input type="button" value="替换" onclick="thwb();">
+        <br/>
+        <br/>
+        替换结果:
+        <br>
+        <textarea cols="100" rows="8" id="jg"></textarea>
+    </body>
+</html>

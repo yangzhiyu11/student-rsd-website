@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script type="text/javascript">
+            function loadTable(){
+                var iArray;
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function (){
+                    if (xhr.readyState ==4 && xhr.status == 200) {
+                        var data = xhr.responseText;
+                        iArray = JSON.parse(data);
+
+                        var str = "<table border='1' width='100%'>";
+                        str += "<tr>";
+                        str += "<th>主键</th>";
+                        str += "<th>标题</th>";
+                        str += "<th>新闻类型</th>";
+                        str += "<th>简短描述</th>";
+                        str += "<th>新闻内容</th>";
+                        str += "<th>发布时间</th>";
+                        str += "<th>发布人员</th>";
+                        str += "<th>创建时间</th>";
+                        str += "<th>修改时间</th>";
+                        str += "<th>操作</th>";
+                        str += "</tr>";
+
+                        iArray.forEach(function (obj,index){
+                            str += "<tr>";
+                            str += "<td>"+(index+1)+"</td>";
+                            str += "<td>"+obj.title+"</td>";
+                            str += "<td>"+obj.typeId+"</td>";
+                            str += "<td>"+obj.shortDesc+"</td>";
+                            str += "<td>"+obj.content+"</td>";
+                            str += "<td>"+obj.showTime+"</td>";
+                            str += "<td>"+obj.pubUserId+"</td>";
+                            str += "<td>"+obj.createTime+"</td>";
+                            str += "<td>"+obj.updateTime+"</td>";
+                            str += "<td style='text-align: center'>" +
+                                "<input type='button' value='修改' onclick='doUpdatePage("+obj.id+")'/>" +
+                                "<input type='button' value='删除' onclick='doDelete("+obj.id+")'/></td>";
+                            str += "</tr>";
+                        });
+
+                        str += "</table>";
+
+                        var showTable = document.getElementById("showTable");
+                        showTable.innerHTML = str;
+                    }
+                };
+                xhr.open("get","/newsInfo/list",true);
+                xhr.send();
+            }
+
+            function qh(sz) {
+                if (sz != null){
+                    var sj = new Date(sz);
+                    return sj.getFullYear() + "-" + (sj.getMonth() + 1) + "-" + sj.getDate() + " " + sj.getHours() + ":" + sj.getMinutes()+":"+sj.getSeconds();
+                }
+            }
+
+            function toAddPage() {
+                window.location.href = "/newsInfo/add.html";
+            }
+
+            function doUpdatePage(id){
+                window.location.href = "/newsInfo/update.html?id="+id
+            }
+
+            function doDelete(id) {
+                if (confirm("您确定删除吗？")){
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange= function (){
+                        if (xhr.readyState == 4 && xhr.status == 200){
+                            var data = xhr.responseText;
+                            if (data == "true"){
+                                alert("删除成功！")
+                                window.location.href = "/newsInfo/list.html";
+                            }else {
+                                alert("删除失败！")
+                            }
+                        }
+                    }
+                    xhr.open("get","/newsInfo/delete?id="+id,true);
+                    xhr.send();
+                }
+            }
+
+        </script>
+    </head>
+    <body onload="loadTable()">
+        <h2>新闻信息表</h2>
+        <input type="button" value="新增" onclick="toAddPage()"/>
+        <div id="showTable"></div>
+    </body>
+</html>

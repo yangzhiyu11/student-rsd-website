@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.rsd.mapper.IDiaryMapper">
+    <resultMap id="diaryMap" type="com.rsd.bean.Diary">
+        <result property="createTime" column="create_time" />
+        <result property="userId" column="user_id" />
+    </resultMap>
+    <select id="queryList" resultMap="diaryMap">
+        select * from bu_diary;
+    </select>
+
+    <select id="queryListByParam" parameterType="com.rsd.bean.Diary" resultMap="diaryMap">
+        select * from bu_diary
+        <where>
+            <if test="title != null">
+                and title like concat('%', #{title}, '%')
+            </if>
+            <if test="content != null">
+                and content like concat('%', #{content}, '%')
+            </if>
+            <if test="userId != null">
+                and user_id #{userId}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryListByIds" parameterType="Integer[]" resultMap="diaryMap">
+        select * from bu_diary where id in
+        <foreach collection="iArray" item="i" open="(" close=")" separator=",">
+            #{i}
+        </foreach>
+    </select>
+
+    <select id="getById" parameterType="Integer" resultMap="diaryMap">
+        select * from bu_diary where id=#{id};
+    </select>
+
+    <insert id="insert" parameterType="com.rsd.bean.Diary">
+        insert into bu_diary values (null ,#{title}, #{content}, #{createTime}, #{userId});
+    </insert>
+
+    <insert id="insertList" parameterType="list">
+        insert into bu_diary values
+        <foreach collection="diaryList" item="diary" separator=",">
+            (null,#{diary.title},#{diary.content},#{diary.createTime},#{diary.userId})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.rsd.bean.Diary">
+        update bu_diary
+        <set>
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="content != null">
+                content=#{content},
+            </if>
+            <if test="createTime != null">
+                create_time=#{createTime},
+            </if>
+            <if test="userId != null">
+                user_id=#{userId}
+            </if>
+        </set>
+        where id=#{id};
+    </update>
+    
+    <update id="updateForNull" parameterType="com.rsd.bean.Diary">
+        update bu_diary set title=#{title},content=#{content},create_time=#{createTime},user_id=#{userId} where id=#{id};
+    </update>
+
+    <delete id="deleteById" parameterType="Integer">
+        delete from bu_diary where id=#{id};
+    </delete>
+</mapper>

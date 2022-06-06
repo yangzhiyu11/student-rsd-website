@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script type="text/javascript">
+
+            function loadObject() {
+                var params = window.location.search;
+                var id = params.substring(4);
+                var  formData = new FormData();
+                formData.set("id",id);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        var json = JSON.parse(xhr.responseText);
+                        document.getElementById("title").value = json.title;
+                        document.getElementById("typeId").value = json.typeId;
+                        document.getElementById("shortDesc").value = json.shortDesc;
+                        document.getElementById("content").value = json.content;
+                        document.getElementById("showTime").value = json.showTime;
+                        document.getElementById("pubUserId").value = json.pubUserId;
+                    }
+                };
+                xhr.open("post", "/newsInfo/toUpdate", true);
+                xhr.send(formData);
+            }
+            function doUpdate(){
+                var myForm =  document.getElementById("myForm")
+                var  ss = window.location.search;
+                var id  = ss.substring(4);
+                var formData = new FormData(myForm);
+                formData.set("id",id);
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        if (xhr.responseText == "true") {
+                            alert("修改成功！");
+                            window.location.href = "/newsInfo/list2.html";
+                        } else {
+                            alert("修改失败！")
+                        }
+                    }
+                };
+                xhr.open("post", "/newsInfo/doUpdate", true);
+                xhr.send(formData);
+            }
+        </script>
+    </head>
+    <body onload="loadObject();">
+        <form id="myForm">
+            <input type="hidden" id="id">
+            <table border="1" width="500px">
+                <tr>
+                    <td width="100">标题</td>
+                    <td><input type="text" name="title" id="title"></td>
+                </tr>
+                <tr>
+                    <td>新闻类型</td>
+                    <td>
+                        <select name="typeId" id="typeId">
+                            <option value="1">实时新闻</option>
+                            <option value="2">体育新闻</option>
+                            <option value="3">科技新闻</option>
+                            <option value="4">农业新闻</option>
+                            <option value="5">最新动态</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>简短描述</td>
+                    <td><input type="text" name="shortDesc" id="shortDesc"></td>
+                </tr>
+                <tr>
+                    <td>新闻内容</td>
+                    <td><input type="text" name="content" id="content"></td>
+                </tr>
+                <tr>
+                    <td>发布时间</td>
+                    <td><input type="text" name="showTime" id="showTime"></td>
+                </tr>
+                <tr>
+                    <td>发布人员</td>
+                    <td><input type="text" name="pubUserId" id="pubUserId"></td>
+                </tr>
+            </table>
+            <input type="button" value="确认" onclick="doUpdate()">
+        </form>
+        <div><a href="/newsInfo/list2.html">返回</a></div>
+    </body>
+</html>
